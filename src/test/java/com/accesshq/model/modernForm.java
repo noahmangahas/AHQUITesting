@@ -1,22 +1,28 @@
-package com.accesshq.test.model;
+package com.accesshq.model;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 
-public class modernFormTest {
+public class modernForm {
 
     private final WebDriver driver;
 
-    public modernFormTest(WebDriver driver) {
+    public modernForm(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void openForm() {
+    public void openModernForm() {
         driver.findElement(By.cssSelector("[aria-label='forms']")).click();
+        var tabs = driver.findElements(By.cssSelector("[role=tab]"));
+        for (var tab : tabs) {
+            if (tab.getText().equalsIgnoreCase("modern")) {
+                tab.click();
+                break;
+            }
+        }
     }
 
     public void setName(String name) {
@@ -41,9 +47,9 @@ public class modernFormTest {
         }
     }
 
-    public boolean checkToast() {
+    public boolean isToast() {
         new WebDriverWait(driver, Duration.ofSeconds(15)).
-                until(ExpectedConditions.visibilityOfElementLocated(By.className("snackbar")));
-        return driver.findElement(By.className("snackbar")).getText().equalsIgnoreCase("Thanks for your feedback Noah");
+                until(ExpectedConditions.visibilityOfElementLocated(By.className("popup-message")));
+        return driver.findElement(By.className("popup-message")).getText().equalsIgnoreCase("Thanks for your feedback Noah");
     }
 }

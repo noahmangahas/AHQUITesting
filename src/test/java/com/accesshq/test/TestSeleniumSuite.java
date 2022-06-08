@@ -1,7 +1,6 @@
 package com.accesshq.test;
 
-import com.accesshq.test.model.modernFormTest;
-import dev.failsafe.internal.util.Assert;
+import com.accesshq.model.modernForm;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -19,21 +18,20 @@ public class TestSeleniumSuite {
     @Test
     public void loginClickTest() {
         driver.findElement(By.id("loginButton")).click();
-//        Assertions.assertEquals();
     }
 
     @Test
     public void submitFormTest() {
-        modernFormTest form = new modernFormTest(driver);
+        modernForm form = new modernForm(driver);
 
-        form.openForm();
+        form.openModernForm();
         form.setName("Noah");
         form.setEmail("noah@email.com");
         form.clickAgree();
 
         form.clickSubmit();
 
-        Assertions.assertTrue(form.checkToast());
+        Assertions.assertTrue(form.isToast());
     }
 
     @AfterEach
