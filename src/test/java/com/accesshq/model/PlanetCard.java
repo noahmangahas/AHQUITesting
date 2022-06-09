@@ -1,17 +1,27 @@
 package com.accesshq.model;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
 public class PlanetCard {
 
-    private final WebDriver card;
+    private final WebElement card;
 
-    public PlanetCard(WebDriver card) {
+    public PlanetCard(WebElement card) {
         this.card = card;
     }
 
-    public String getPlanetName(WebDriver driver) {
-        return null;
+    public String getName() {
+        return card.findElement(By.className("name")).getText();
+    }
+
+    public long getDistance() {
+        return Long.parseLong(card.findElement(By.className("distance")).getText().
+                replace(" km", "").
+                replaceAll(",",""));
+    }
+
+    public void clickExplore() {
+        card.findElement(By.tagName("button")).click();
     }
 }

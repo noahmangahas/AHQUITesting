@@ -1,11 +1,17 @@
 package com.accesshq.model;
 
+import com.accesshq.strategies.MatchingStrategy;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NotFoundException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.lang.reflect.Array;
 import java.time.Duration;
+import java.util.ArrayList;
+
 import static java.lang.Long.parseLong;
 
 public class PlanetPage {
@@ -49,5 +55,38 @@ public class PlanetPage {
         }
 
         return farthestPlanet;
+    }
+
+    public ArrayList<PlanetCard> getAllPlanets() {
+        ArrayList<PlanetCard> result = new ArrayList<PlanetCard>();
+        var planets = driver.findElements(By.className("planet"));
+
+        for (var planet : planets) {
+            result.add(new PlanetCard(planet));
+        }
+        return result;
+    }
+
+    public PlanetCard getFurthestPlanet() {
+        long furthestDistance = 0;
+        PlanetCard furthestPlanet = null;
+
+        for (var planet : getAllPlanets()) {
+            if (planet.getDistance() > furthestDistance) {
+                furthestDistance = planet.getDistance();
+                furthestPlanet = planet;
+            }
+        }
+        return furthestPlanet;
+    }
+
+    public PlanetCard getPlanet(MatchingStrategy strategy) {
+
+        for (var planet : getAllPlanets()) {
+            if (strategy.match(planet)) {
+                return planet;
+            }
+        }
+        throw new NotFoundException("Planet not found");
     }
 }

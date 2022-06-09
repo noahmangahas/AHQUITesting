@@ -1,6 +1,8 @@
 package com.accesshq.test;
 
 import com.accesshq.model.PlanetPage;
+import com.accesshq.strategies.DistanceMatchingStrategy;
+import com.accesshq.strategies.NameMatchingStrategy;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,9 +25,9 @@ public class TestPlanetPage {
     @Test
     public void clickExploreTest() {
         PlanetPage page = new PlanetPage(driver);
-
         page.openPage();
-        page.clickExplore("Earth");
+
+        page.getPlanet(new NameMatchingStrategy("Earth")).clickExplore();
     }
 
     @Test
@@ -33,7 +35,7 @@ public class TestPlanetPage {
         PlanetPage page = new PlanetPage(driver);
         page.openPage();
 
-        page.clickExplore(page.findFarthestPlanet());
+        page.getFurthestPlanet().clickExplore();
 
         Assertions.assertEquals("Exploring Neptune", driver.findElement(By.className("popup-message")).getText());
     }
@@ -46,16 +48,7 @@ public class TestPlanetPage {
         page.openPage();
 
         //Act
-        var planets = driver.findElements(By.className("planet"));
-        String planetName = "";
-        for (var planet : planets) {
-            long distance = parseLong(planet.findElement(By.className("distance")).getText().
-                    replace(" km", "").
-                    replaceAll(",",""));
-            if (distance == 4495000) {
-                page.clickExplore(planet.findElement(By.className("name")).getText());
-            }
-        }
+        page.getPlanet(new DistanceMatchingStrategy(4495000)).clickExplore();
 
         //Assert
         Assertions.assertEquals("Exploring Neptune", driver.findElement(By.className("popup-message")).getText());
