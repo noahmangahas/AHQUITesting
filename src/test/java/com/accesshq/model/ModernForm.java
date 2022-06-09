@@ -6,11 +6,11 @@ import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 
-public class modernForm {
+public class ModernForm {
 
     private final WebDriver driver;
 
-    public modernForm(WebDriver driver) {
+    public ModernForm(WebDriver driver) {
         this.driver = driver;
     }
 

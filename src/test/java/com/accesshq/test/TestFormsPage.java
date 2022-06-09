@@ -1,11 +1,11 @@
 package com.accesshq.test;
 
-import com.accesshq.model.modernForm;
+import com.accesshq.model.ModernForm;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class TestSeleniumSuite {
+public class TestFormsPage {
     WebDriver driver;
 
     @BeforeEach
@@ -22,7 +22,7 @@ public class TestSeleniumSuite {
 
     @Test
     public void submitFormTest() {
-        modernForm form = new modernForm(driver);
+        ModernForm form = new ModernForm(driver);
 
         form.openModernForm();
         form.setName("Noah");
