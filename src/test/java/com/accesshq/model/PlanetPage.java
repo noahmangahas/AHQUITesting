@@ -34,9 +34,6 @@ public class PlanetPage {
                 planet.findElement(By.tagName("button")).click();
             }
         }
-
-        new WebDriverWait(driver, Duration.ofSeconds(1)).
-                until(ExpectedConditions.visibilityOfElementLocated(By.className("popup-message")));
     }
 
     public String findFarthestPlanet() {
@@ -81,12 +78,18 @@ public class PlanetPage {
     }
 
     public PlanetCard getPlanet(MatchingStrategy strategy) {
-
         for (var planet : getAllPlanets()) {
             if (strategy.match(planet)) {
                 return planet;
             }
         }
         throw new NotFoundException("Planet not found");
+    }
+
+    public String getPopupMessage() {
+        new WebDriverWait(driver, Duration.ofSeconds(1)).
+                until(ExpectedConditions.visibilityOfElementLocated(By.className("popup-message")));
+
+        return driver.findElement(By.className("popup-message")).getText();
     }
 }

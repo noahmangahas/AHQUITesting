@@ -24,10 +24,15 @@ public class TestPlanetPage {
 
     @Test
     public void clickExploreTest() {
+        //Arrange
         PlanetPage page = new PlanetPage(driver);
         page.openPage();
 
+        //Act
         page.getPlanet(new NameMatchingStrategy("Earth")).clickExplore();
+
+        //Assert
+        Assertions.assertEquals("Exploring Earth", page.getPopupMessage());
     }
 
     @Test
@@ -42,7 +47,6 @@ public class TestPlanetPage {
 
     @Test
     public void matchFurthestPlanet() {
-
         //Arrange
         PlanetPage page = new PlanetPage(driver);
         page.openPage();
@@ -51,7 +55,7 @@ public class TestPlanetPage {
         page.getPlanet(new DistanceMatchingStrategy(4495000)).clickExplore();
 
         //Assert
-        Assertions.assertEquals("Exploring Neptune", driver.findElement(By.className("popup-message")).getText());
+        Assertions.assertEquals("Exploring Neptune", page.getPopupMessage());
     }
 
     @AfterEach
